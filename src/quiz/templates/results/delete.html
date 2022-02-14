@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Delete students
+{% endblock %}
+
+
+{% block content %}
+    <p>Hey, I'm Delete<p>
+    <table class="table table-hover">
+        <tr>
+            <th align="left"><b>Name test</b></th>
+            <th align="left"><b>Name user</b></th>
+            <th align="left"><b>Create in </b></th>
+            <th align="left"><b>Correct answer</b></td>
+            <th align="center"><b>Y / N</b></th>
+        </tr>
+        <form method="POST">
+            {% csrf_token %}
+            <th align="left"><b>{{ object.exam }}</b></th>
+            <th align="left"><b>{{ object.user }}</b></th>
+            <th align="left"><b>{{ object.create_timestamp }}</b></th>
+            <th align="left"><b>{{ object.num_correct_answers }}</b></th>
+
+
+            <td> <input class="btn btn-outline-danger" type="submit"  value="Agree"> &nbsp;|&nbsp;
+                <a class="btn btn-outline-secondary" href="{% url 'quizzes:list' %}">Cancel</a>
+            </td>
+        </form>
+    </table>
+
+{% endblock %}

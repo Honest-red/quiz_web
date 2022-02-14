@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+<body align="center">
+{% block content %}
+{% if not user.is_authenticated %}
+<div>
+    <p></p>
+    <a class="btn btn-success" href="#">Login</a>
+    <a class="btn btn-success" href="#">Registration</a>
+</div>
+{% endif %}
+{% endblock %}
+</body>
+
