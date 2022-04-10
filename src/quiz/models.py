@@ -70,6 +70,9 @@ class Result(BaseModel):
     num_correct_answers = models.PositiveSmallIntegerField(default=0)
     num_incorrect_answers = models.PositiveSmallIntegerField(default=0)
 
+    def __str__(self):
+        return f'{self.user}: {self.exam} {self.num_correct_answers} {self.num_incorrect_answers}'
+
     class Meta:
         verbose_name = 'Result'
         verbose_name_plural = 'Results'
@@ -97,7 +100,7 @@ class Result(BaseModel):
         return f'{time // 3600}:{time // 60}:{time - ((time // 60) * 60)}'
 
     def ball(self):
-        from account.apps import user_raiting_dispatcher
+        # from account.apps import user_raiting_dispatcher
         ball = self.num_correct_answers - self.num_incorrect_answers
         #user_raiting_dispatcher(ball, instance=self.user)
         return max(0, ball)

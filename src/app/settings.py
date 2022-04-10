@@ -13,6 +13,11 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 from pathlib import Path
 from os import getenv
 
+import django.core.mail.backends.console
+from celery.schedules import crontab
+from core.tasks import simple_task
+from core.tasks import send_email_report
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -46,6 +51,7 @@ INSTALLED_APPS = [
 
     'account.apps.AccountConfig',
     'quiz.apps.QuizConfig',
+    'core.apps.CoreConfig'
 ]
 
 MIDDLEWARE = [
@@ -155,3 +161,20 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
 CKEDITOR_UPLOAD_PATH = 'uploads/'
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+DEFAULT_FROM_EMAIL = "honest@test.ua"
+ADMINS = [("testuser", "test_admin@test.ua"), ]
+
+CELERY_BROKER_URL = getenv("CELERY_BROKER")
+
+CELERY_BEAT_SCHEDULE = {
+    "simple_task": {
+        "task": "core.tasks.simple_task",
+        "schedule": crontab(minute="*/1"),
+    },
+    "send_email_report": {
+        "task": "core.tasks.send_email_report",
+        "schedule": crontab(minute="*/1"),
+    },
+}
