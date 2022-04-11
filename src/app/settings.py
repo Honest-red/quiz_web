@@ -17,6 +17,7 @@ import django.core.mail.backends.console
 from celery.schedules import crontab
 from core.tasks import simple_task
 from core.tasks import send_email_report
+from core.tasks import send_hello
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -177,4 +178,8 @@ CELERY_BEAT_SCHEDULE = {
         "task": "core.tasks.send_email_report",
         "schedule": crontab(minute="*/1"),
     },
+    "send_hello": {
+        "task": "core.tasks.send_hello",
+        "schedule": crontab(minute="*/1"),
+    }
 }
